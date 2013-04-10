@@ -1,0 +1,35 @@
+*******************************************************************************
+*
+*       Program JSENCODE
+*       
+*       Copyright (C) 2013
+*
+*
+*******************************************************************************
+*
+*  Author: Kevin King, Precision Solutions
+*  Created on: Spectrum 2012
+*  Description:
+*
+*
+*****************************************************************************
+FUNCTION JSENCODE(VALUE)
+*
+RESULT = ''
+LEN.VALUE = LEN(VALUE)
+FOR VALUE.LOOP = 1 TO LEN.VALUE
+	CH = VALUE[VALUE.LOOP,1]
+	VAL = SEQ(CH)
+		BEGIN CASE
+			CASE (CH EQ '\')
+				CH = '\\'
+			CASE (CH EQ '"')
+				CH = '\"'
+			CASE (VAL GT 127)
+				CH = '&#x' : OCONV(CH,'MX') : ';'
+		END CASE
+	*
+	RESULT := CH
+NEXT VALUE.LOOP
+*
+RETURN RESULT
