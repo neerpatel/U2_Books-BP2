@@ -1,7 +1,7 @@
 *******************************************************************************
 *
 *       Program LIST.BOOKS
-*       
+*
 *       Copyright (C) 2013
 *
 *
@@ -14,22 +14,23 @@
 *
 *****************************************************************************
 
-OPEN "U2_BOOKS" TO BOOKS ELSE ABORT 201,"U2_BOOKS"
-DONE = "FALSE"
+      OPEN "U2_BOOKS" TO BOOKS ELSE ABORT 201,"U2_BOOKS"
+      DONE = "FALSE"
 
-EXECUTE 'SSELECT U2_BOOKS WITH GENRE="FANTASY"'
- LOOP
-       
-	READNEXT BOOK.ID ELSE DONE = "TRUE"
-  	UNTIL DONE = "TRUE" DO
+      EXECUTE 'SSELECT U2_BOOKS WITH GENRE="FANTASY"'
+      LOOP
 
-        READ BOOK.REC FROM BOOKS,BOOK.ID ELSE 
-		PRINT "ERROR!":
-        RETURN
-      END
-      	CRT "TITLE : ": BOOK.REC<1>
-      	CRT "ISBN : ": BOOK.REC<3>
-      	CRT "PRICE : ": BOOK.REC<8>
-    REPEAT
+         COUNTER = 0
+         READNEXT BOOK.ID ELSE DONE = "TRUE"
+      UNTIL DONE = "TRUE" OR COUNTER = 10 DO
+         COUNTER = COUNTER + 1
 
+         READ BOOK.REC FROM BOOKS,BOOK.ID ELSE
+            PRINT "ERROR!":
+            RETURN
+         END
+         CRT "TITLE : ": BOOK.REC<1>
+         CRT "ISBN : ": BOOK.REC<3>
+         CRT "PRICE : ": BOOK.REC<8>
+      REPEAT
 
